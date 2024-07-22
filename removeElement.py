@@ -1,3 +1,6 @@
+#Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. 
+# The order of the elements may be changed. 
+# Then return the number of elements in nums which are not equal to val.
 class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
         numsLength = len(nums)
@@ -17,46 +20,46 @@ class Solution:
             lastI = numsLength - 1
             newLength = numsLength
             
-            #Start at the last value and go to the start until a value is found that isn't the one being removed
             searching = True
             while(searching):
-                #whole array contains the removed value
-                if lastI < 0:
-                    searching = False
-                    return 0
+                #if last value is equal to val
+                if nums[lastI] == val:
+                    #check if curI and lastI are at the same index
+                    if lastI == curI:
+                        #print("gone through the whole array")
+                        searching = False
+                        return curI
 
-                if nums[lastI] != val:
-                    break
-
-                lastI -= 1
-                newLength -= 1
-
-            while(searching):
-                print("======================================")
-                print("curI " + str(curI))
-                print("lastI " + str(lastI))
-                print("newLength " + str(newLength))
-
-                if nums[curI] == val:
-                    print("swap before")
-                    print(nums)
-                    #swap it with the last item
-                    nums[curI], nums[lastI] = nums[lastI], nums[curI]
-
-                    print("swap after")
-                    print(nums)
-
+                    #print(str(nums[lastI]) + " equal to val, decreasing lastI")
                     lastI -= 1
-                    newLength -= 1
 
-                if curI >= lastI:
-                    print("break")
-                    print(nums)
-                    searching = False
-                    break
+                else:
+                    #check if nums[curI] is equal to val
+                    if nums[curI] == val:
+                        #print("yes, swap with the last value")
+                        nums[curI], nums[lastI] = nums[lastI], nums[curI]
 
-                curI += 1
+                        #increment one of the indexes and check if the indices are now equal
+                        curI += 1
+                        if curI == lastI:
+                            #print("end of array")
+                            searching = False
+                            return curI
 
-            print(nums)
-            print(newLength)
-            return newLength
+                        else:
+                            #increment the other index after confiming that they are not equal. 
+                            #i.e. more of the array to check
+                            lastI -= 1
+
+                    else:
+                        #print("no")
+                        #check if curI and lastI are at the same index
+                        if lastI == curI:
+                            #print("gone through the whole array 2")
+                            searching = False
+                            return curI + 1
+
+                        else:
+                            #print("increment curI")
+                            curI += 1
+            
